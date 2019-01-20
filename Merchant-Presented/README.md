@@ -1,9 +1,9 @@
 # PayMaya EMV Merchant Presented QR Code Specification for Payment Systems
 
-* Author: Edge Dalmacio <edge.dalmacio@paymaya.com>
+* Author: Edge Dalmacio <edge.dalmacio@paymaya.com>, Ralph Jacon Chua <ralph.chua@voyagerinnovation.com>
 * Created: 2018-02-15
-* Last modified: 2018-09-12
-* Status: Version 1.0
+* Last modified: 2019-01-20
+* Status: Version 1.1-Draft
 
 # Introduction
 
@@ -146,6 +146,13 @@ As an example: ID `"01"` that is under the root of the QR Code refers to the Poi
     *   Point of Initiation Method (ID `"01"`)
     *   Merchant Account Information (ID `"26"`)
         *   Global Unique Identifier (ID `"00"`)
+    *   BancNet Instapay P2P (ID `"27"`)
+        *   Payment System Unique Identifier (ID `"00"`)
+        *   Acquirer Identifier (ID `"01"`)
+        *   Payment Type (ID `"02"`)
+        *   Merchant Identifier (ID `"03"`)
+        *   Merchant Credit Account (ID `"04"`)
+        *   Mobile Number (ID `"05"`)
     *   Merchant Category Code (ID `"52"`)
     *   Transaction Currency (ID `"53"`)
     *   Transaction Amount (ID `"54"`)
@@ -178,8 +185,9 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 | RFU for EMVCo | `"06"`-`"12"` | ans | var. up to "99" | O | Data Objects reserved for EMVCo |
 | JCB Merchant Account Information | `"13"`-`"14"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
 | RFU for EMVCo | `"15"`-`"25"` | ans | var. up to "99" | O | Data Objects reserved for EMVCo |
-| PayMaya Merchant Account Information | `"26"` | ans | var. up to "99" | M | See section Data Objects for PayMaya Merchant Account Information |
-| RFU for PayMaya | `"27"`-`"51"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
+| PayMaya Merchant Account Information | `"26"` | ans | var. up to "99" | C | See section Data Objects for PayMaya Merchant Account Information |
+| BancNet Instapay P2P Information | `"27"` | ans | var. up to "99" | C | See section Data Objects for BancNet Instapay P2P Information |
+| RFU for PayMaya | `"28"`-`"51"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
 | Merchant Category Code | `"52"` | N | "04" | M | As defined by [ISO 18245] and assigned by the Acquirer. |
 | Transaction Currency | `"53"` | N | "03" | M | See section Requirements > Transaction Currency (ID `"53"`) |
 | Transaction Amount | `"54"` | ans | var. up to "13" | C | Absent if the mobile application is to prompt the consumer to enter the transaction amount. Present otherwise. See section Requirements > Transaction Amount (ID `"54"`) |
@@ -203,6 +211,18 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 |------|----|--------|--------|----------|---------|
 | Globally Unique Identifier | `"00"` | ans | "11" | M | "com.paymaya" |
 | RFU for PayMaya | `"01"`-`"99"` | ans | var. up to "84" | O | Data Objects reserved for PayMaya |
+
+## Data Objects for BancNet Instapay P2P Information (ID `"27"`)
+
+| Name | ID | Format | Length | Presence | Comment |
+|------|----|--------|--------|----------|---------|
+| Globally Unique Identifier | `"00"` | ans | "14" | M | "com.bnapi.ipay" |
+| Acquirer ID | `"01"` | ans | "04" | M | "BN Bank Code. Corresponds to receiver bank for instapay" |
+| Payment Type| `"02"` | ans | "08" | M | "99960300 - (Instapay via QR)" |
+| Merchant ID | `"03"` | ans | "15" | M | "Bancnet Assigned" |
+| Merchant Credit Account | `"04"` | ans | "var up to 19" | M | "Acquirer provided information" |
+| Mobile Number | `"05"` | ans | "var up to 12" | O | "Mobile number of merchant. May be used for notifications" |
+
 
 ## Data Objects for Additional Data Field Template (ID `"62"`)
 
@@ -537,6 +557,55 @@ An example is given below:
         *   Phone Number (ID `"04"`) = `1234567890`
         *   Service (ID `"07"`) = `PD`
     *   CRC (ID `"63"`) = `955F`
+
+## Instapay P2P
+
+### P2P QR Code Data
+
+```
+00020101021227770014com.bnapi.ipay010400140208999603000315899900000030016041600000016433671005204411153036085802PH5911PAYMAYA INC6005Pasig63049B00
+```
+![Image of PLDT Home QR](https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=00020101021227770014com.bnapi.ipay010400140208999603000315899900000030016041600000016433671005204411153036085802PH5911PAYMAYA%20INC6005Pasig63049B00)
+
+### Binary Data (shown as hex bytes)
+
+```
+00 02 30 31
+01 02 31 32
+27 77
+    00 14 63 6F 6D 2E 62 6E 61 70 69 2E 69 70 61 79
+    01 04 30 30 31 34
+    02 08 39 39 39 36 30 33 30 30
+    03 15 38 39 39 39 30 30 30 30 30 30 33 30 30 31 36
+    04 16 30 30 30 30 30 30 31 36 34 33 33 36 37 31 30 30
+52 04 34 31 31 31
+53 03 36 30 38
+54 06 31 30 30 30 2E 30
+58 02 50 48
+59 11 50 41 59 4D 41 59 41 20 49 4E 43
+60 05 50 61 73 69 67
+63 04 39 42 30 30
+```
+
+### EMV Interpreted Data
+
+*   Root
+*   Payload Format Indicator (ID `"00"`) = `01`
+*   Point of Initiation Method (ID `"01"`) = `12`
+*   Bancnet Instapay P2P Information (ID `"27"`)
+    *   Payment System Unique Identifier (ID `"00"`) = `com.bnapi.ipay`
+    *   Acquirer Identifier (ID `"01"`) = `0014`
+    *   Payment Type (ID `"02"`) = `99960300`
+    *   Merchant Identifier (ID `"03"`) = `899900000030016`
+    *   Merchant Credit Account (ID `"04"`) = `0000001643367100`
+*   Merchant Category Code (ID `"52"`) = `4111`
+*   Transaction Currency (ID `"53"`) = `608`
+*   Transaction Amount (ID `"54"`) = `1000`
+*   Country Code (ID `"58"`) = `PH`
+*   Merchant Name (ID `"59"`) = `PAYMAYA INC`
+*   Merchant City (ID `"60"`) = `Pasig`
+*   CRC (ID `"63"`) = `9B00`
+
 
 # Appendix B - QR Generator
 
