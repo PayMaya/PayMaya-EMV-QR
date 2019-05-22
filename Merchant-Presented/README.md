@@ -225,10 +225,10 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 | Mobile Number | `"02"` | ans | var. up to "25" | O | The mobile number could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Mobile Number. For example, the Mobile Number to be used for multiple use cases, such as mobile top-up and bill payment. |
 | Store Label | `"03"` | ans | var. up to "25" | O | A distinctive value associated to a store. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Store Label. For example, the Store Label may be displayed to the consumer on the mobile application identifying a specific store. |
 | Loyalty Number | `"04"` | ans | var. up to "25" | O | Typically, a loyalty card number. This number could be provided by the merchant, if known, or could `"***"` to indicate to the mobile application to prompt the consumer to input their Loyalty Number. |
-| Reference Label | `"05"` | ans | var. up to "25" | C | Any value as defined by the merchant or acquirer in order to identify the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile app to prompt the consumer to input a transaction Reference Label. For example, the Reference Label may be used by the consumer mobile application for transaction logging or receipt display. This field is mandatory for P2P transactions with a value of `"211000"`.|
+| Reference Label | `"05"` | ans | var. up to "25" | C | Any value as defined by the merchant or acquirer in order to identify the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile app to prompt the consumer to input a transaction Reference Label. For example, the Reference Label may be used by the consumer mobile application for transaction logging or receipt display. |
 | Customer Label | `"06"` | ans | var. up to "25" | O | Any value identifying a specific consumer. This value could be provided by the merchant (if known), or could `"***"` to indicate to the mobile application to prompt the consumer to input their Customer Label. For example, the Customer Label may be a subscriber ID for subscription services, a student enrollment number, etc. |
-| Terminal Label | `"07"` | ans | var. up to "25" | C | A distinctive value associated to a terminal in the store. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Terminal Label. For example, the Terminal Label may be displayed to the consumer on the mobile application identifying a specific terminal. This field is mandatory for P2P transactions. |
-| Purpose of Transaction | `"08"` | ans | var. up to "25" | C | Any value defining the purpose of the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a value describing the purpose of the transaction. For example, the Purpose of Transaction may have the value "International Data Package" for display on the mobile application. This field is mandatory for P2P transactions. |
+| Terminal Label | `"07"` | ans | var. up to "25" | C | A distinctive value associated to a terminal in the store. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Terminal Label. For example, the Terminal Label may be displayed to the consumer on the mobile application identifying a specific terminal. |
+| Purpose of Transaction | `"08"` | ans | var. up to "25" | C | Any value defining the purpose of the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a value describing the purpose of the transaction. For example, the Purpose of Transaction may have the value "International Data Package" for display on the mobile application. |
 | Additional Customer Data Request | `"09"` | ans | var. up to "25" | O | Contains indications that the mobile application is to provide the requested information in order to complete the transaction. The information requested should be provided by the mobile application in the authorization without unnecessarily prompting the consumer. For example, the Additional Consumer Data Request may indicate that the consumer mobile number is required to complete the transaction, in which case the mobile application should be able to provide this number (that that mobile application has previously stored) without unnecessarily prompting the consumer. One or more of the following characters may appear to indicate that the corresponding data should be provided in the transaction initiation to complete the transaction: `"A"`: Address of the consumer, `"M"`: Mobile number of the consumer, `"E"`: Email address of the consumer. If more than one character is included, it means that each data object corresponding to the character is required to complete the transaction. Note that each unique character should appear only one. |
 | RFU for EMVCo | `"10"`-`"49"` | S | var. up to "99" | O | Data objects reserved for EMVCo |
 | Bill Details Template | `"50"` | S | var. up to "99" | O | See section Data Objects for Bill Details Template (ID `"62"` Sub-ID `"50"`) |
@@ -431,10 +431,10 @@ An example is given below:
 ### EMV Merchant QR Code Data
 
 ```
-00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513+6399859039435204601653036085802PH5912PayMaya User6011Mandaluyong622805062110000707PAYMAYA0803***6304F09D
+00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513+6399859039435204601653036085802PH5912PayMaya User6011Mandaluyong630475C3
 ```
 
-![Image of P2P QR](https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513%2B6399859039435204601653036085802PH5912PayMaya%20User6011Mandaluyong622805062110000707PAYMAYA0803***6304F09D)
+![Image of P2P QR](https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513%2B6399859039435204601653036085802PH5912PayMaya%20User6011Mandaluyong630475C3)
 
 ### Binary Data (shown as hex bytes)
 
@@ -452,11 +452,7 @@ An example is given below:
 58 02 50 48
 59 12 50 61 79 4D 61 79 61 20 55 73 65 72
 60 11 4D 61 6E 64 61 6C 75 79 6F 6E 67
-62 28
-  05 06 32 31 31 30 30 30
-  07 07 50 41 59 4D 41 59 41
-  08 03 2A 2A 2A
-63 04 46 30 39 44
+63 04 37 35 43 33
 ```
 
 ### EMV Interpreted Data
@@ -479,7 +475,7 @@ An example is given below:
         *   Reference Label (ID `"05"`) = `211000`
         *   Terminal Label (ID `"07"`) = `PAYMAYA`
         *   Purpose of Transaction (ID `"08"`) = `***`
-    *   CRC (ID `"63"`) = `F09D`
+    *   CRC (ID `"63"`) = `75C3`
 
 ## Meralco
 
