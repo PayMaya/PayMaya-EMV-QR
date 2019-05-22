@@ -27,6 +27,7 @@ The processing of the QR Code by the mobile application and the network messages
 | [ISO 7816-4] | Identification cards - Integrated circuit cards - Part 4: Organization, security and commands for interchange |
 | [ISO 639] | Codes for the representation of names of languages - Part 1: Alpha - 2 Code |
 | [ISO 9362] | The elements and structure of a universal identifier code, the business identifier code (BIC), for financial and non-financial institutions |
+| [E.164] | The international public telecommunication numbering plan |
 | [EMV Book 4] | Codes for the representation of names of languages - Part 1: Alpha - 2 Code |
 | [Unicode] | Unicode Standard, specifically the UTF-8 encoding form. For more information, please check: http://www.unicode.org/versions/latest |
 | [UUID] | A universally unique identifier (UUID) as defined in the Internet Engineering Task Force (IETF) RFC 4122:https://tools.ietf.org/html/rfc4122 |
@@ -214,7 +215,7 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 | Payment Type | `"02"` | ans | "8" | M | `"99964403"` – InstaPay Transfer |
 | Merchant ID | `"03"` | ans | "15" | O | Receiver-assigned, if applicable, to authenticate the QR transaction. For P2P, this may be omitted. |
 | Merchant Credit Account | `"04"` | ans | "19" | M | Creditor Account Number. _Note: This may be any Receiver-provided information that would enable it to identify the merchant account where payment shall be credited. Receiver may use actual account detail, a token, an alias or a masked/encrypted information to represent the actual account number_ |
-| Mobile Number | `"05"` | ans | "15" | O | Mobile Number of Merchant; May be used for notification. The E.164 recommended format shall be used as a standard (+<country code><mobile network code><subscriber number>, i.e. +639188450195 |
+| Mobile Number | `"05"` | ans | "15" | O | Mobile Number of Merchant as defined by [E.164]. May be used for notification. Format: +[country code][subscriber number] e.g. +639188450195|
 
 ## Data Objects for Additional Data Field Template (ID `"62"`)
 
