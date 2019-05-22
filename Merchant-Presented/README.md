@@ -2,8 +2,8 @@
 
 * Author: Edge Dalmacio <edge.dalmacio@paymaya.com>
 * Created: 2018-02-15
-* Last modified: 2018-09-12
-* Status: Version 1.0
+* Last modified: 2019-05-22
+* Status: Version 1.1
 
 # Introduction
 
@@ -26,6 +26,7 @@ The processing of the QR Code by the mobile application and the network messages
 | [ISO 4217] | Codes for the representation of currencies and funds |
 | [ISO 7816-4] | Identification cards - Integrated circuit cards - Part 4: Organization, security and commands for interchange |
 | [ISO 639] | Codes for the representation of names of languages - Part 1: Alpha - 2 Code |
+| [ISO 9362] | The elements and structure of a universal identifier code, the business identifier code (BIC), for financial and non-financial institutions |
 | [EMV Book 4] | Codes for the representation of names of languages - Part 1: Alpha - 2 Code |
 | [Unicode] | Unicode Standard, specifically the UTF-8 encoding form. For more information, please check: http://www.unicode.org/versions/latest |
 | [UUID] | A universally unique identifier (UUID) as defined in the Internet Engineering Task Force (IETF) RFC 4122:https://tools.ietf.org/html/rfc4122 |
@@ -37,6 +38,9 @@ The processing of the QR Code by the mobile application and the network messages
 | Abbreviation | Description |
 |--------------|-------------|
 | ans | Alphanumeric Special |
+| BIC | Business Identifier Code | 
+| BSP | Bangko Sentral ng Pilipinas | 
+| BSFI | BSP Supervised Financial Institution | 
 | C | Conditional | 
 | CDCVM | Consumer Device Cardholder Verification Method |
 | CRC | Cyclic Redundancy Check |
@@ -46,6 +50,8 @@ The processing of the QR Code by the mobile application and the network messages
 | M | Mandatory |
 | N | Numeric |
 | O | Optional |
+| P2P | Person to Person |
+| PPMI | Philippine Payments Management, Inc. |
 | QR Code | Quick Response Code |
 | RFU | Reserved for Future Use |
 | S | String |
@@ -144,23 +150,21 @@ As an example: ID `"01"` that is under the root of the QR Code refers to the Poi
 *   Root
     *   Payload Format Indicator (ID `"00"`)
     *   Point of Initiation Method (ID `"01"`)
-    *   Merchant Account Information (ID `"26"`)
+    *   Merchant Account Information (ID `"27"`)
         *   Global Unique Identifier (ID `"00"`)
+        *   Acquirer ID (ID `"01"`)
+        *   Payment Type (ID `"02"`)
+        *   Merchant Credit Account (ID `"04"`)
+        *   Mobile Number (ID `"05"`)
     *   Merchant Category Code (ID `"52"`)
     *   Transaction Currency (ID `"53"`)
-    *   Transaction Amount (ID `"54"`)
     *   Country Code (ID `"58"`)
     *   Merchant Name (ID `"59"`)
     *   Merchant City (ID `"60"`)
     *   Additional Data Field Template (ID `"62"`)
-        *   Bill Number (ID `"01"`)
-        *   Bill Details Template (ID `"50"`)
-            *   Global Unique Identifier (ID `"00"`)
-            *   Biller Slug (ID `"01"`)
-    *   BayadCenter Template (ID `"80"`)
-        *   Global Unique Identifier (ID `"00"`)
-        *   Biller Code (ID `"01"`)
-        *   Service Code (ID `"02"`)
+        *   Reference Label (ID `"05"`)
+        *   Terminal Label (ID `"07"`)
+        *   Purpose of Transasction (ID `"08"`)
     *   CRC (ID `"63"`)
 
 The Payload Format Indicator (ID `"00"`) is the first data object under the root and allows the mobile application to determine the data representation of the remaining data included in the QR Code and how to parse the data. The CRC ID (ID `"63"`) is the last object under the root and allows the mobile application to check the integrity of the data scanned without having to parse all of the data objects. The position of all other data objects under the root or within templates is arbitrary and may appear in any order.
@@ -173,13 +177,17 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 |------|----|--------|--------|----------|---------|
 | Payload Format Indicator | `"00"` | N | "02" | M | See section Requirements > Payload Format Indicator (ID `"00"`) |
 | Point of Initiation Method | `"01"` | N | "02" | O | See section Requirements > Point of Initiation Method (ID `"01"`) |
-| Visa Merchant Account Information | `"02"`-`"03"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
-| MasterCard Merchant Account Information | `"04"`-`"05"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
-| RFU for EMVCo | `"06"`-`"12"` | ans | var. up to "99" | O | Data Objects reserved for EMVCo |
-| JCB Merchant Account Information | `"13"`-`"14"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
-| RFU for EMVCo | `"15"`-`"25"` | ans | var. up to "99" | O | Data Objects reserved for EMVCo |
-| PayMaya Merchant Account Information | `"26"` | ans | var. up to "99" | M | See section Data Objects for PayMaya Merchant Account Information |
-| RFU for PayMaya | `"27"`-`"51"` | ans | var. up to "99" | O | Data Objects reserved for PayMaya |
+| Visa Merchant Account Information | `"02"`-`"03"` | ans | var. up to "99" | O | Data Objects reserved for Visa |
+| MasterCard Merchant Account Information | `"04"`-`"05"` | ans | var. up to "99" | O | Data Objects reserved for Mastercard |
+| RFU for EMVCo | `"06"`-`"08"` | ans | var. up to "99" | O | Data Objects reserved for EMVCo |
+| Discover Merchant Account Information | `"09"`-`"10"` | ans | var. up to "99" | O | Data Objects reserved for Discover |
+| Amex Merchant Account Information | `"11"`-`"12"` | ans | var. up to "99" | O | Data Objects reserved for Amex |
+| JCB Merchant Account Information | `"13"`-`"14"` | ans | var. up to "99" | O | Data Objects reserved for JCB |
+| UnionPay Merchant Account Information | `"15"`-`"16"` | ans | var. up to "99" | O | Data Objects reserved for UnionPay |
+| RFU for EMVCo | `"17"`-`"25"` | ans | var. up to "99" | O | Data Objects reserved for EMVCo |
+| RFU for PPMI | `"26"` | ans | var. up to "99" | O | Data Objects reserved for PPMI |
+| P2P Merchant Account Information | `"27"` | ans | var. up to "99" | O | See section Data Objects for P2P Merchant Account Information |
+| RFU for PPMI | `"28"`-`"51"` | ans | var. up to "99" | O | Data Objects reserved for PPMI |
 | Merchant Category Code | `"52"` | N | "04" | M | As defined by [ISO 18245] and assigned by the Acquirer. |
 | Transaction Currency | `"53"` | N | "03" | M | See section Requirements > Transaction Currency (ID `"53"`) |
 | Transaction Amount | `"54"` | ans | var. up to "13" | C | Absent if the mobile application is to prompt the consumer to enter the transaction amount. Present otherwise. See section Requirements > Transaction Amount (ID `"54"`) |
@@ -197,12 +205,16 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 | Unreserved Templates | `"81"`-`"99"` | S | var. up to "99" | O | RFU |
 | CRC | `"63"` | ans | "04" | M | See section Requirements > CRC (ID `"63"`) |
 
-## Data Objects for PayMaya Merchant Account Information (ID `"26"`)
+## Data Objects for P2P Merchant Account Information (ID `"27"`)
 
 | Name | ID | Format | Length | Presence | Comment |
 |------|----|--------|--------|----------|---------|
-| Globally Unique Identifier | `"00"` | ans | "11" | M | "com.paymaya" |
-| RFU for PayMaya | `"01"`-`"99"` | ans | var. up to "84" | O | Data Objects reserved for PayMaya |
+| Globally Unique Identifier | `"00"` | ans | "12" | M | `"com.p2pqrpay"` |
+| Acquirer ID | `"01"` | ans | "11" | M | As defined by [ISO 9362] and assigned by the Acquirer. `"PAPHPHM1XXX"` - PayMaya |
+| Payment Type | `"02"` | ans | "8" | M | `"99964403"` – InstaPay Transfer |
+| Merchant ID | `"03"` | ans | "15" | O | Receiver-assigned, if applicable, to authenticate the QR transaction. For P2P, this may be omitted. |
+| Merchant Credit Account | `"04"` | ans | "19" | M | Creditor Account Number. _Note: This may be any Receiver-provided information that would enable it to identify the merchant account where payment shall be credited. Receiver may use actual account detail, a token, an alias or a masked/encrypted information to represent the actual account number_ |
+| Mobile Number | `"05"` | ans | "15" | O | Mobile Number of Merchant; May be used for notification. The E.164 recommended format shall be used as a standard (+<country code><mobile network code><subscriber number>, i.e. +639188450195 |
 
 ## Data Objects for Additional Data Field Template (ID `"62"`)
 
@@ -212,10 +224,10 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 | Mobile Number | `"02"` | ans | var. up to "25" | O | The mobile number could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Mobile Number. For example, the Mobile Number to be used for multiple use cases, such as mobile top-up and bill payment. |
 | Store Label | `"03"` | ans | var. up to "25" | O | A distinctive value associated to a store. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Store Label. For example, the Store Label may be displayed to the consumer on the mobile application identifying a specific store. |
 | Loyalty Number | `"04"` | ans | var. up to "25" | O | Typically, a loyalty card number. This number could be provided by the merchant, if known, or could `"***"` to indicate to the mobile application to prompt the consumer to input their Loyalty Number. |
-| Reference Label | `"05"` | ans | var. up to "25" | O | Any value as defined by the merchant or acquirer in order to identify the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile app to prompt the consumer to input a transaction Reference Label. For example, the Reference Label may be used by the consumer mobile application for transaction logging or receipt display. |
+| Reference Label | `"05"` | ans | var. up to "25" | C | Any value as defined by the merchant or acquirer in order to identify the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile app to prompt the consumer to input a transaction Reference Label. For example, the Reference Label may be used by the consumer mobile application for transaction logging or receipt display. This field is mandatory for P2P transactions with a value of `"211000"`.|
 | Customer Label | `"06"` | ans | var. up to "25" | O | Any value identifying a specific consumer. This value could be provided by the merchant (if known), or could `"***"` to indicate to the mobile application to prompt the consumer to input their Customer Label. For example, the Customer Label may be a subscriber ID for subscription services, a student enrollment number, etc. |
-| Terminal Label | `"07"` | ans | var. up to "25" | O | A distinctive value associated to a terminal in the store. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Terminal Label. For example, the Terminal Label may be displayed to the consumer on the mobile application identifying a specific terminal. |
-| Purpose of Transaction | `"08"` | ans | var. up to "25" | O | Any value defining the purpose of the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a value describing the purpose of the transaction. For example, the Purpose of Transaction may have the value "International Data Package" for display on the mobile application. |
+| Terminal Label | `"07"` | ans | var. up to "25" | C | A distinctive value associated to a terminal in the store. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a Terminal Label. For example, the Terminal Label may be displayed to the consumer on the mobile application identifying a specific terminal. This field is mandatory for P2P transactions. |
+| Purpose of Transaction | `"08"` | ans | var. up to "25" | C | Any value defining the purpose of the transaction. This value could be provided by the merchant or could `"***"` to indicate to the mobile application to prompt the consumer to input a value describing the purpose of the transaction. For example, the Purpose of Transaction may have the value "International Data Package" for display on the mobile application. This field is mandatory for P2P transactions. |
 | Additional Customer Data Request | `"09"` | ans | var. up to "25" | O | Contains indications that the mobile application is to provide the requested information in order to complete the transaction. The information requested should be provided by the mobile application in the authorization without unnecessarily prompting the consumer. For example, the Additional Consumer Data Request may indicate that the consumer mobile number is required to complete the transaction, in which case the mobile application should be able to provide this number (that that mobile application has previously stored) without unnecessarily prompting the consumer. One or more of the following characters may appear to indicate that the corresponding data should be provided in the transaction initiation to complete the transaction: `"A"`: Address of the consumer, `"M"`: Mobile number of the consumer, `"E"`: Email address of the consumer. If more than one character is included, it means that each data object corresponding to the character is required to complete the transaction. Note that each unique character should appear only one. |
 | RFU for EMVCo | `"10"`-`"49"` | S | var. up to "99" | O | Data objects reserved for EMVCo |
 | Bill Details Template | `"50"` | S | var. up to "99" | O | See section Data Objects for Bill Details Template (ID `"62"` Sub-ID `"50"`) |
@@ -305,7 +317,7 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 
 # Data Object ID Allocation
 
-An ID of a primitive data object or a template is either allocated by EMVCo, Reserved for Future Use (RFU) by EMVCo, RFU by PayMaya, RFU by BayadCenter, or Unreserved.
+An ID of a primitive data object or a template is either allocated by EMVCo, Reserved for Future Use (RFU) by EMVCo, RFU by PPMI, RFU by PayMaya, RFU by BayadCenter, or Unreserved.
 
 IDs allocated by EMVCo have a meaning, representation, and format as defined by EMVCo in this, and related, specifications.
 
@@ -412,6 +424,61 @@ An example is given below:
 *   _Example: a CRC with a two-byte hexadecimal value of '007B' is included in the QR Code as "6304007B"._
 
 # Appendix A - Examples
+
+## P2P
+
+### EMV Merchant QR Code Data
+
+```
+00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513+6399859039435204601653036085802PH5912PayMaya User6011Mandaluyong622805062110000707PAYMAYA0803***6304F09D
+```
+
+![Image of P2P QR](https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513%2B6399859039435204601653036085802PH5912PayMaya%20User6011Mandaluyong622805062110000707PAYMAYA0803***6304F09D)
+
+### Binary Data (shown as hex bytes)
+
+```
+00 02 30 31
+01 02 31 31
+27 75
+  00 12 63 6F 6D 2E 70 32 70 71 72 70 61 79
+  01 11 50 41 50 48 50 48 4D 31 58 58 58
+  02 08 39 39 39 36 34 34 30 33
+  04 11 30 39 39 38 35 39 30 33 39 34 33
+  05 13 20 36 33 39 39 38 35 39 30 33 39 34 33
+52 04 36 30 31 36
+53 03 36 30 38
+58 02 50 48
+59 12 50 61 79 4D 61 79 61 20 55 73 65 72
+60 11 4D 61 6E 64 61 6C 75 79 6F 6E 67
+62 28
+  05 06 32 31 31 30 30 30
+  07 07 50 41 59 4D 41 59 41
+  08 03 2A 2A 2A
+63 04 46 30 39 44
+```
+
+### EMV Interpreted Data
+
+*   Root
+    *   Payload Format Indicator (ID `"00"`) = `01`
+    *   Point of Initiation Method (ID `"01"`) = `11`
+    *   Merchant Account Information (ID `"27"`)
+        *   Global Unique Identifier (ID `"00"`) = `com.p2pqrpay`
+        *   Acquirer ID (ID `"01"`) = `PAPHPHM1XXX`
+        *   Payment Type (ID `"02"`) = `99964403`
+        *   Merchant Credit Account (ID `"04"`) = `09985903943`
+        *   Mobile Number (ID `"05"`) = `+639985903943`
+    *   Merchant Category Code (ID `"52"`) = `6016`
+    *   Transaction Currency (ID `"53"`) = `608`
+    *   Country Code (ID `"58"`) = `PH`
+    *   Merchant Name (ID `"59"`) = `PayMaya User`
+    *   Merchant City (ID `"60"`) = `Mandaluyong`
+    *   Additional Data Field Template (ID `"62"`)
+        *   Reference Label (ID `"05"`) = `211000`
+        *   Terminal Label (ID `"07"`) = `PAYMAYA`
+        *   Purpose of Transaction (ID `"08"`) = `***`
+    *   CRC (ID `"63"`) = `F09D`
 
 ## Meralco
 
