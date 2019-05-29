@@ -471,10 +471,6 @@ An example is given below:
     *   Country Code (ID `"58"`) = `PH`
     *   Merchant Name (ID `"59"`) = `PayMaya User`
     *   Merchant City (ID `"60"`) = `Mandaluyong`
-    *   Additional Data Field Template (ID `"62"`)
-        *   Reference Label (ID `"05"`) = `211000`
-        *   Terminal Label (ID `"07"`) = `PAYMAYA`
-        *   Purpose of Transaction (ID `"08"`) = `***`
     *   CRC (ID `"63"`) = `75C3`
 
 ## Meralco
