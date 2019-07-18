@@ -616,7 +616,7 @@ https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=**<insert qrCodeDa
 
 ## QR Generation SDK 
 
-[https://developers.mastercard.com/documentation/masterpass-qr](https://developers.mastercard.com/documentation/masterpass-qr)
+[https://developerzone.mastercard.com/documentation/masterpass-qr-client-sdks](https://developerzone.mastercard.com/documentation/masterpass-qr-client-sdks)
 
 ## QR Generation Portal
 
