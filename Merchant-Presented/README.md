@@ -2,8 +2,8 @@
 
 * Author: Edge Dalmacio <edge.dalmacio@paymaya.com>
 * Created: 2018-02-15
-* Last modified: 2019-05-22
-* Status: Version 1.1
+* Last modified: 2019-07-22
+* Status: Version 1.01
 
 # Introduction
 
@@ -426,7 +426,7 @@ An example is given below:
 
 # Appendix A - Examples
 
-## P2P
+## P2P without Transaction Amount (ID `"54"`)
 
 ### EMV Merchant QR Code Data
 
@@ -472,6 +472,55 @@ An example is given below:
     *   Merchant Name (ID `"59"`) = `PayMaya User`
     *   Merchant City (ID `"60"`) = `Mandaluyong`
     *   CRC (ID `"63"`) = `75C3`
+
+## P2P with Transaction Amount (ID `"54"`)
+
+### EMV Merchant QR Code Data
+
+```
+00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513+6399859039435204601653036085405390.85802PH5912PayMaya User6011Mandaluyong63049025
+```
+
+![Image of P2P QR](https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=00020101021127750012com.p2pqrpay0111PAPHPHM1XXX0208999644030411099859039430513%2B6399859039435204601653036085405390.85802PH5912PayMaya%20User6011Mandaluyong63049025)
+
+### Binary Data (shown as hex bytes)
+
+```
+00 02 30 31
+01 02 31 31
+27 75
+  00 12 63 6F 6D 2E 70 32 70 71 72 70 61 79
+  01 11 50 41 50 48 50 48 4D 31 58 58 58
+  02 08 39 39 39 36 34 34 30 33
+  04 11 30 39 39 38 35 39 30 33 39 34 33
+  05 13 20 36 33 39 39 38 35 39 30 33 39 34 33
+52 04 36 30 31 36
+53 03 36 30 38
+54 05 33 39 30 2E 38
+58 02 50 48
+59 12 50 61 79 4D 61 79 61 20 55 73 65 72
+60 11 4D 61 6E 64 61 6C 75 79 6F 6E 67
+63 04 39 30 32 35
+```
+
+### EMV Interpreted Data
+
+*   Root
+    *   Payload Format Indicator (ID `"00"`) = `01`
+    *   Point of Initiation Method (ID `"01"`) = `11`
+    *   Merchant Account Information (ID `"27"`)
+        *   Global Unique Identifier (ID `"00"`) = `com.p2pqrpay`
+        *   Acquirer ID (ID `"01"`) = `PAPHPHM1XXX`
+        *   Payment Type (ID `"02"`) = `99964403`
+        *   Merchant Credit Account (ID `"04"`) = `09985903943`
+        *   Mobile Number (ID `"05"`) = `+639985903943`
+    *   Merchant Category Code (ID `"52"`) = `6016`
+    *   Transaction Currency (ID `"53"`) = `608`
+    *   Transaction Amount (ID `"54"`) = `390.8`
+    *   Country Code (ID `"58"`) = `PH`
+    *   Merchant Name (ID `"59"`) = `PayMaya User`
+    *   Merchant City (ID `"60"`) = `Mandaluyong`
+    *   CRC (ID `"63"`) = `9025`
 
 ## Meralco
 
