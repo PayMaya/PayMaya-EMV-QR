@@ -2,7 +2,7 @@ pull_request_rules:
 
   - name: set new pr to work-in-progress
     conditions:
-      - label!=[ready-to-merge]
+      - label!=ready-to-merge
     actions:
       comment:
         message: Please change the label of your pull request to `ready-to-merge` once you're done with your changes. Thanks!
