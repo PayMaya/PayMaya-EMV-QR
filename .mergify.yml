@@ -1,4 +1,21 @@
 pull_request_rules:
+
+  - name: set new pr to work-in-progress
+    conditions:
+      - label!=[ready-to-merge,work-in-progress]
+    actions:
+      comment:
+        message: Please change the label of your pull request to `ready-to-merge` once you're done with your changes. Thanks!
+      label:
+        add: [work-in-progress]
+
+  - name: assign reviewer once ready-to-merge
+    conditions:
+      - label=ready-to-merge
+    actions:
+      request_reviews:
+        users: [ardzeii]
+
   - name: automatic merge when reviewed and ready-to-merge
     conditions:
       - approved-reviews-by>=1
@@ -8,3 +25,7 @@ pull_request_rules:
       merge:
         method: merge
         strict: true
+      label:
+        remove: [ready-to-merge]
+      delete_head_branch:
+        force: false
