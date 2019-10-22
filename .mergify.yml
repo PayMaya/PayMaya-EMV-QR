@@ -15,7 +15,7 @@ pull_request_rules:
       - label=ready-to-merge
     actions:
       request_reviews:
-        users: [ardzeii]
+        users: [edgedalmacio,ardzeii]
 
   - name: automatic merge when reviewed and ready-to-merge
     conditions:
