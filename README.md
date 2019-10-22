@@ -1,5 +1,4 @@
 # PayMaya EMV QR Specifications
-[![Mergify Status](https://img.shields.io/endpoint.svg?url=https://gh.mergify.io/badges/PayMaya/PayMaya-EMV-QR&style=flat)](https://mergify.io)
 
 | Version | Published | Description |
 |---------|-----------|-------------|
