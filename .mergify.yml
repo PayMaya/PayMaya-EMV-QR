@@ -1,0 +1,10 @@
+pull_request_rules:
+  - name: automatic merge when reviewed and ready-to-merge
+    conditions:
+      - approved-reviews-by>=1
+      - base=master
+      - label=ready-to-merge
+    actions:
+      merge:
+        method: merge
+        strict: true
