@@ -5,6 +5,8 @@
 * Last modified: 2019-10-24
 * Status: Version 1.1.1
 
+# Table of Contents
+
 - [Introduction](#introduction)
   * [Purpose](#purpose)
   * [Normative References](#normative-references)
