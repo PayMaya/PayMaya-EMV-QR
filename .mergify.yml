@@ -16,6 +16,8 @@ pull_request_rules:
     actions:
       request_reviews:
         users: [edgedalmacio,ardzeii]
+      label:
+        remove: [work-in-progress]
 
   - name: automatic merge when reviewed and ready-to-merge
     conditions:
