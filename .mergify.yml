@@ -15,7 +15,7 @@ pull_request_rules:
       - label=ready-to-merge
     actions:
       request_reviews:
-        users: [edgedalmacio,ardzeii]
+        users: [ardzeii]
       label:
         remove: [work-in-progress]
 
