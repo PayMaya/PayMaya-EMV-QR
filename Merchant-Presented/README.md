@@ -271,7 +271,7 @@ The format of a value field in a data object is either Numeric (N), Alphanumeric
 | Name | ID | Format | Length | Presence | Comment |
 |------|----|--------|--------|----------|---------|
 | Globally Unique Identifier | `"00"` | ans | "12" | M | `"com.p2pqrpay"` |
-| Acquirer ID | `"01"` | ans | "11" | M | As defined by [ISO 9362] and assigned by the Acquirer. See reference [Bank to BIC mapping](../../References/BANK_TO_BIC_MAPPING.md#bank-to-bic-mapping) to see list of Acquirer IDs. `"PAPHPHM1XXX"` - PayMaya. |
+| Acquirer ID | `"01"` | ans | "11" | M | As defined by [ISO 9362] and assigned by the Acquirer. See reference [Bank to BIC mapping](../References/BANK_TO_BIC_MAPPING.md#bank-to-bic-mapping) to see list of Acquirer IDs. `"PAPHPHM1XXX"` - PayMaya. |
 | Payment Type | `"02"` | ans | "8" | M | `"99964403"` – InstaPay Transfer |
 | Merchant ID | `"03"` | ans | "15" | O | Receiver-assigned, if applicable, to authenticate the QR transaction. For P2P, this may be omitted. |
 | Merchant Credit Account | `"04"` | ans | "19" | M | Creditor Account Number. _Note: This may be any Receiver-provided information that would enable it to identify the merchant account where payment shall be credited. Receiver may use actual account detail, a token, an alias or a masked/encrypted information to represent the actual account number_ |
