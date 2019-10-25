@@ -3,4 +3,4 @@
 
 | Version | Published | Description |
 |---------|-----------|-------------|
-| 1.1 | 2019-05-22 | [PayMaya EMV Merchant Presented QR Code Specification for Payment Systems](https://github.com/PayMaya/PayMaya-EMV-QR/tree/master/Merchant-Presented) |
+| 1.1.1 | 2019-10-24 | [PayMaya EMV Merchant Presented QR Code Specification for Payment Systems](https://github.com/PayMaya/PayMaya-EMV-QR/tree/master/Merchant-Presented) |
