@@ -1,6 +1,6 @@
 # PayMaya EMV Merchant Presented QR Code Specification for Payment Systems
 
-* Author: Edge Dalmacio <edge.dalmacio@paymaya.com>
+* Author: __[Edge Dalmacio](https://github.com/edgedalmacio)__
 * Created: 2018-02-15
 * Last modified: 2019-10-24
 * Status: Version 1.1.1
